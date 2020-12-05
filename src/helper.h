@@ -6,18 +6,25 @@
 #elif defined(ESP8266)
 //#include <FS.h>
 #include <LittleFS.h>
+#include <time_functions.h>
 #define ESP_FS LittleFS
 #endif
 
-#define MILLIS_PRINT         Serial.printf("[%10lu] ", millis())
+#define TIME_PRINT
+
+#ifdef TIME_PRINT
+#define TIMESTAMP_PRINT      Serial.printf("[%s] ", timeToString().c_str())
+#else
+#define TIMESTAMP_PRINT      Serial.printf("[%10lu] ", millis())
+#endif
 
 #define ENABLE_DEBUG_PRINT
 
 #ifdef ENABLE_DEBUG_PRINT
-#define TDEBUG_PRINT(x)      MILLIS_PRINT; Serial.print(x)
-#define TDEBUG_PRINTLN(x)    MILLIS_PRINT; Serial.println(x)
-#define TDEBUG_PRINTF(...)   MILLIS_PRINT; Serial.printf(__VA_ARGS__)
-#define TDEBUG_PRINTF_P(...) MILLIS_PRINT; Serial.printf_P(__VA_ARGS__) 
+#define TDEBUG_PRINT(x)      TIMESTAMP_PRINT; Serial.print(x)
+#define TDEBUG_PRINTLN(x)    TIMESTAMP_PRINT; Serial.println(x)
+#define TDEBUG_PRINTF(...)   TIMESTAMP_PRINT; Serial.printf(__VA_ARGS__)
+#define TDEBUG_PRINTF_P(...) TIMESTAMP_PRINT; Serial.printf_P(__VA_ARGS__) 
 #define DEBUG_PRINT(x)       Serial.print(x)
 #define DEBUG_PRINTLN(x)     Serial.println(x)
 #define DEBUG_PRINTF(...)    Serial.printf(__VA_ARGS__)
