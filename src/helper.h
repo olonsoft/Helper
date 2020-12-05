@@ -10,12 +10,14 @@
 #define ESP_FS LittleFS
 #endif
 
+// to print color ansi chars on platformio terminal 
+// set monitor_flags  = --raw in platformio.ini
+// https://en.wikipedia.org/wiki/ANSI_escape_code
 #define TIME_PRINT
-
 #ifdef TIME_PRINT
-#define TIMESTAMP_PRINT      Serial.printf("[%s] ", timeToString().c_str())
+#define TIMESTAMP_PRINT      Serial.printf("[\e[36m%s\e[m] ", timeToString().c_str())
 #else
-#define TIMESTAMP_PRINT      Serial.printf("[%10lu] ", millis())
+#define TIMESTAMP_PRINT      Serial.printf("[\e[36m%10lu\e[m] ", millis())
 #endif
 
 #define ENABLE_DEBUG_PRINT
