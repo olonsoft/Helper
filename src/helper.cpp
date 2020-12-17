@@ -286,6 +286,8 @@ String boolToString(bool b, String t, String f) { return b ? t : f; }
 
 String boolToString(bool b) { return boolToString(b, "true", "false"); }
 
+String boolSuccess(bool b) { return boolToString(b, SUCCESS_STR, FAIL_STR); }
+
 String quotedText(String s) { return "\"" + s + "\""; }
 
 String quotedText(const char* s) { return "\"" + String(s) + "\""; }
