@@ -13,14 +13,28 @@
 // to print color ansi chars on platformio terminal 
 // set monitor_flags  = --raw in platformio.ini
 // https://en.wikipedia.org/wiki/ANSI_escape_code
-#define TIME_PRINT
-#ifdef TIME_PRINT
-#define TIMESTAMP_PRINT      Serial.printf("[\e[36m%s\e[m] ", timeToString().c_str())
-#else
-#define TIMESTAMP_PRINT      Serial.printf("[\e[36m%10lu\e[m] ", millis())
+#ifndef COLORED_TERMINAL
+#define COLORED_TERMINAL
 #endif
 
+#define TIME_PRINT
+#ifdef TIME_PRINT
+#ifdef COLORED_TERMINAL
+#define TIMESTAMP_PRINT      Serial.printf("[\e[36m%s\e[m] ", timeToString().c_str())
+#else
+#define TIMESTAMP_PRINT      Serial.printf("[%s] ", timeToString().c_str())
+#endif
+#else
+#ifdef COLORED_TERMINAL
+#define TIMESTAMP_PRINT      Serial.printf("[\e[36m%10lu\e[m] ", millis())
+#else
+#define TIMESTAMP_PRINT      Serial.printf("[%10lu] ", millis())
+#endif
+#endif
+
+#ifndef ENABLE_DEBUG_PRINT
 #define ENABLE_DEBUG_PRINT
+#endif
 
 #ifdef ENABLE_DEBUG_PRINT
 #define TDEBUG_PRINT(x)      TIMESTAMP_PRINT; Serial.print(x)
@@ -50,8 +64,13 @@
 #define BIT_TOGGLE(value, pos) (value ^= (1ULL << pos))
 #define BIT_IS_SET(value, pos) (!!(value) & (1ULL << pos))
 
-#define SUCCESS_STR "Success"
-#define FAIL_STR    "Fail"
+#ifndef SUCCESS_STR
+#define SUCCESS_STR   "Success"
+#endif
+
+#ifndef FAIL_STR
+#define FAIL_STR      "Fail"
+#endif
 
 uint32_t getChipIdInt();
 String   getChipIdHex();
