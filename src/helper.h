@@ -2,11 +2,12 @@
 
 #include <time_functions.h>
 #include <FS.h>
-#include <LittleFS.h>
 
 #ifdef ESP32
+#include <LITTLEFS.h>
 #define ESP_FS LITTLEFS
 #elif defined(ESP8266)
+#include <LittleFS.h>
 #define ESP_FS LittleFS
 #endif
 
