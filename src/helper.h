@@ -1,19 +1,14 @@
 #pragma once
 
 #include <time_functions.h>
-/*
-#ifdef ESP32
-#include <SPIFFS.h>
-#define ESP_FS SPIFFS
-#elif defined(ESP8266)
-//#include <FS.h>
-#include <LittleFS.h>
-#define ESP_FS LittleFS
-#endif
-*/
 #include <FS.h>
 #include <LittleFS.h>
+
+#ifdef ESP32
+#define ESP_FS LITTLEFS
+#elif defined(ESP8266)
 #define ESP_FS LittleFS
+#endif
 
 // to print color ansi chars on platformio terminal 
 // set monitor_flags  = --raw in platformio.ini
