@@ -1,7 +1,7 @@
 #pragma once
 
 #include <time_functions.h>
-
+/*
 #ifdef ESP32
 #include <SPIFFS.h>
 #define ESP_FS SPIFFS
@@ -10,6 +10,10 @@
 #include <LittleFS.h>
 #define ESP_FS LittleFS
 #endif
+*/
+#include <FS.h>
+#include <LittleFS.h>
+#define ESP_FS LittleFS
 
 // to print color ansi chars on platformio terminal 
 // set monitor_flags  = --raw in platformio.ini
@@ -96,5 +100,7 @@ String   jsonPair(const char* s1, const char* s2);
 bool     isTrue(String s);
 String   TwoDigitNumber(int n);
 String   formatBytes(size_t bytes);
+bool     beginFS();
 
 extern String lastErrorStr;
+extern bool fileSystemBegun;
