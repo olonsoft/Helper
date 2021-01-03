@@ -1,12 +1,13 @@
 #pragma once
 
+#include <time_functions.h>
+
 #ifdef ESP32
 #include <SPIFFS.h>
 #define ESP_FS SPIFFS
 #elif defined(ESP8266)
 //#include <FS.h>
 #include <LittleFS.h>
-#include <time_functions.h>
 #define ESP_FS LittleFS
 #endif
 
