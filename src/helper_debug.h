@@ -31,45 +31,45 @@
 #endif
 
 // log errors
-#define LOGERROR(x)      if (APP_LOG_LEVEL>0) { DBG_PORT.print(x) }
-#define LOGERRORLN(x)    if (APP_LOG_LEVEL>0) { DBG_PORT.println(x) }
-#define LOGERRORF(...)   if (APP_LOG_LEVEL>0) { DBG_PORT.printf(__VA_ARGS__) }
-#define LOGERROR_P(...)  if (APP_LOG_LEVEL>0) { DBG_PORT.printf_P(__VA_ARGS__) }
+#define LOGERROR(x)       if (APP_LOG_LEVEL>0) { DBG_PORT.print(x); }
+#define LOGERRORLN(x)     if (APP_LOG_LEVEL>0) { DBG_PORT.println(x); }
+#define LOGERRORF(...)    if (APP_LOG_LEVEL>0) { DBG_PORT.printf(__VA_ARGS__); }
+#define LOGERRORF_P(...)  if (APP_LOG_LEVEL>0) { DBG_PORT.printf_P(__VA_ARGS__); }
 // log errors with time stamp
-#define TLOGERROR(x)     if (APP_LOG_LEVEL>0) { TIMESTAMP_PRINT; LOGERROR(x) }
-#define TLOGERRORLN(x)   if (APP_LOG_LEVEL>0) { TIMESTAMP_PRINT; LOGERRORLN(x)  }
-#define TLOGERRORF(...)  if (APP_LOG_LEVEL>0) { TIMESTAMP_PRINT; LOGERRORF(...) }
-#define TLOGERROR_P(...) if (APP_LOG_LEVEL>0) { TIMESTAMP_PRINT; LOGERROR_P(...) }
+#define TLOGERROR(x)      if (APP_LOG_LEVEL>0) { TIMESTAMP_PRINT; DBG_PORT.print(x); }
+#define TLOGERRORLN(x)    if (APP_LOG_LEVEL>0) { TIMESTAMP_PRINT; DBG_PORT.println(x);  }
+#define TLOGERRORF(...)   if (APP_LOG_LEVEL>0) { TIMESTAMP_PRINT; DBG_PORT.printf(__VA_ARGS__); }
+#define TLOGERRORF_P(...) if (APP_LOG_LEVEL>0) { TIMESTAMP_PRINT; DBG_PORT.printf_P(__VA_ARGS__); }
 
 // log warnings
-#define LOGWARN(x)       if (APP_LOG_LEVEL>1) { DBG_PORT.print(x) }
-#define LOGWARNLN(x)     if (APP_LOG_LEVEL>1) { DBG_PORT.println(x) }
-#define LOGWARNF(...)    if (APP_LOG_LEVEL>1) { DBG_PORT.printf(__VA_ARGS__) }
-#define LOGWARN_P(...)   if (APP_LOG_LEVEL>1) { DBG_PORT.printf_P(__VA_ARGS__) }
+#define LOGWARN(x)        if (APP_LOG_LEVEL>1) { DBG_PORT.print(x); }
+#define LOGWARNLN(x)      if (APP_LOG_LEVEL>1) { DBG_PORT.println(x); }
+#define LOGWARNF(...)     if (APP_LOG_LEVEL>1) { DBG_PORT.printf(__VA_ARGS__); }
+#define LOGWARNF_P(...)   if (APP_LOG_LEVEL>1) { DBG_PORT.printf_P(__VA_ARGS__); }
 // log wanrings with timestamp
-#define TLOGWARN(x)      if (APP_LOG_LEVEL>1) { TIMESTAMP_PRINT; LOGWARN(x) }
-#define TLOGWARNLN(x)    if (APP_LOG_LEVEL>1) { TIMESTAMP_PRINT; LOGWARNLN(x)  }
-#define TLOGWARNF(...)   if (APP_LOG_LEVEL>1) { TIMESTAMP_PRINT; LOGWARNF(...) }
-#define TLOGWARN_P(...)  if (APP_LOG_LEVEL>1) { TIMESTAMP_PRINT; LOGWARN_P(...) }
+#define TLOGWARN(x)       if (APP_LOG_LEVEL>1) { TIMESTAMP_PRINT; DBG_PORT.print(x); }
+#define TLOGWARNLN(x)     if (APP_LOG_LEVEL>1) { TIMESTAMP_PRINT; DBG_PORT.println(x);  }
+#define TLOGWARNF(...)    if (APP_LOG_LEVEL>1) { TIMESTAMP_PRINT; DBG_PORT.printf(__VA_ARGS__); }
+#define TLOGWARNF_P(...)  if (APP_LOG_LEVEL>1) { TIMESTAMP_PRINT; DBG_PORT.printf_P(__VA_ARGS__); }
 
 //log info
-#define LOGINFO(x)       if (APP_LOG_LEVEL>2) { DBG_PORT.print(x) }
-#define LOGINFOLN(x)     if (APP_LOG_LEVEL>2) { DBG_PORT.println(x) }
-#define LOGINFOF(...)    if (APP_LOG_LEVEL>2) { DBG_PORT.printf(__VA_ARGS__) }
-#define LOGINFO_P(...)   if (APP_LOG_LEVEL>2) { DBG_PORT.printf_P(__VA_ARGS__) }
+#define LOGINFO(x)        if (APP_LOG_LEVEL>2) { DBG_PORT.print(x); }
+#define LOGINFOLN(x)      if (APP_LOG_LEVEL>2) { DBG_PORT.println(x); }
+#define LOGINFOF(...)     if (APP_LOG_LEVEL>2) { DBG_PORT.printf(__VA_ARGS__); }
+#define LOGINFOF_P(...)   if (APP_LOG_LEVEL>2) { DBG_PORT.printf_P(__VA_ARGS__); }
 // log info with timestamp
-#define TLOGINFO(x)      if (APP_LOG_LEVEL>2) { TIMESTAMP_PRINT; LOGINFO(x) }
-#define TLOGINFOLN(x)    if (APP_LOG_LEVEL>2) { TIMESTAMP_PRINT; LOGINFOLN(x)  }
-#define TLOGINFOF(...)   if (APP_LOG_LEVEL>2) { TIMESTAMP_PRINT; LOGINFOF(...) }
-#define TLOGINFO_P(...)  if (APP_LOG_LEVEL>2) { TIMESTAMP_PRINT; LOGINFO_P(...) }
+#define TLOGINFO(x)       if (APP_LOG_LEVEL>2) { TIMESTAMP_PRINT; DBG_PORT.print(x); }
+#define TLOGINFOLN(x)     if (APP_LOG_LEVEL>2) { TIMESTAMP_PRINT; DBG_PORT.println(x);  }
+#define TLOGINFOF(...)    if (APP_LOG_LEVEL>2) { TIMESTAMP_PRINT; DBG_PORT.printf(__VA_ARGS__); }
+#define TLOGINFOF_P(...)  if (APP_LOG_LEVEL>2) { TIMESTAMP_PRINT; DBG_PORT.printf_P(__VA_ARGS__); }
 
 //log debug
-#define LOGDEBUG(x)      if (APP_LOG_LEVEL>3) { DBG_PORT.print(x) }
-#define LOGDEBUGLN(x)    if (APP_LOG_LEVEL>3) { DBG_PORT.println(x) }
-#define LOGDEBUGF(...)   if (APP_LOG_LEVEL>3) { DBG_PORT.printf(__VA_ARGS__) }
-#define LOGDEBUG_P(...)  if (APP_LOG_LEVEL>3) { DBG_PORT.printf_P(__VA_ARGS__) }
+#define LOGDEBUG(x)       if (APP_LOG_LEVEL>3) { DBG_PORT.print(x); }
+#define LOGDEBUGLN(x)     if (APP_LOG_LEVEL>3) { DBG_PORT.println(x); }
+#define LOGDEBUGF(...)    if (APP_LOG_LEVEL>3) { DBG_PORT.printf(__VA_ARGS__); }
+#define LOGDEBUGF_P(...)  if (APP_LOG_LEVEL>3) { DBG_PORT.printf_P(__VA_ARGS__); }
 //log debug with timestamp
-#define TLOGDEBUG(x)     if (APP_LOG_LEVEL>3) { TIMESTAMP_PRINT; LOGDEBUG(x) }
-#define TLOGDEBUGLN(x)   if (APP_LOG_LEVEL>3) { TIMESTAMP_PRINT; LOGDEBUGLN(x)  }
-#define TLOGDEBUGF(...)  if (APP_LOG_LEVEL>3) { TIMESTAMP_PRINT; LOGDEBUGF(...) }
-#define TLOGDEBUG_P(...) if (APP_LOG_LEVEL>3) { TIMESTAMP_PRINT; LOGDEBUG_P(...) }
+#define TLOGDEBUG(x)      if (APP_LOG_LEVEL>3) { TIMESTAMP_PRINT; DBG_PORT.print(x); }
+#define TLOGDEBUGLN(x)    if (APP_LOG_LEVEL>3) { TIMESTAMP_PRINT; DBG_PORT.println(x);  }
+#define TLOGDEBUGF(...)   if (APP_LOG_LEVEL>3) { TIMESTAMP_PRINT; DBG_PORT.printf(__VA_ARGS__); }
+#define TLOGDEBUGF_P(...) if (APP_LOG_LEVEL>3) { TIMESTAMP_PRINT; DBG_PORT.printf_P(__VA_ARGS__); }
