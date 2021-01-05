@@ -1,26 +1,22 @@
 #include <arduino.h>
-
-#ifdef ESP32
-
-#include <WiFi.h>
-#include <SPIFFS.h>
-#define ESP_FS SPIFFS
-
-#elif defined(ESP8266)
-
-#include <ESP8266WiFi.h>
-#include <FS.h>
-#include <LittleFS.h>
-#define ESP_FS LittleFS
-
-#endif
-
 #include <helper.h>
+#include <helper_debug>
 #include <time_functions.h>
 
-#define DEVICE_ID_STR "{id}"
+#include <FS.h>
+
+#ifdef ESP32
+#include <WiFi.h>
+#include <LITTLEFS.h>
+#define ESP_FS LITTLEFS
+#elif defined(ESP8266)
+#include <ESP8266WiFi.h>
+#include <LittleFS.h>
+#define ESP_FS LittleFS
+#endif
 
 String lastErrorStr = "";
+bool fileSystemBegun = false;
 
 String getChipIdHex() {
   String mac = WiFi.macAddress();
@@ -30,7 +26,6 @@ String getChipIdHex() {
 }
 
 #ifdef ESP32
-
 
 //String getChipIdHex() {
 //  String s = String((uint32_t)(ESP.getEfuseMac() >> 32), HEX);
@@ -165,6 +160,21 @@ ESP32 MAX RAM ALLOC: 122.09KB
 ESP32 FREE PSRAM: 3545.93KB
 */
 
+bool beginFS() {
+  if (!fileSystemBegun) {
+#ifdef ESP32    
+    fileSystemBegun = ESP_FS.begin(FORMAT_LITTLEFS_IF_FAILED); // format on fail.
+#else
+    fileSystemBegun = ESP_FS.begin();
+    if (!fileSystemBegun) {
+      DEBUG_PRINTF_P(PSTR("Formatting FS.\n"));
+      fileSystemBegun = ESP_FS.format();
+    }
+#endif  
+  }
+  return (fileSystemBegun);
+}
+
 String getSystemInfoJson() {  
   String c = ",";
   String s = "{";
@@ -210,8 +220,10 @@ String getSystemInfoJson() {
   s += c + jsonPair(F("Firmware size"), formatBytes(ESP.getSketchSize()));         // esp32
   s += c + jsonPair(F("Free FW space"),  formatBytes(ESP.getFreeSketchSpace()));   // esp32
  
-  // ================= SPIFFS ================
-  ESP_FS.begin();
+  // ================= LittleFS ================
+  if (!beginFS() ) {
+    lastErrorStr = F("LittleFS Mount Failed");
+  }
 
 #ifdef ESP8266
   FSInfo fs_info;  
@@ -223,8 +235,8 @@ String getSystemInfoJson() {
     s += c + jsonPair(F("FS"), "No SPIFFS partition");
   }
 #elif defined(ESP32)
-  s += c + jsonPair(F("FS size"),      formatBytes(SPIFFS.totalBytes()));
-  s += c + jsonPair(F("FS used size"), formatBytes(SPIFFS.usedBytes()));
+  s += c + jsonPair(F("FS size"),      formatBytes(ESP_FS.totalBytes()));
+  s += c + jsonPair(F("FS used size"), formatBytes(ESP_FS.usedBytes()));
 #endif
   // ================= WiFi ================
   if (WiFi.getMode() == WIFI_STA) {
@@ -285,6 +297,8 @@ bool isdigit(char n) { return (n >= '0' && n <= '9') ? true : false; }
 String boolToString(bool b, String t, String f) { return b ? t : f; }
 
 String boolToString(bool b) { return boolToString(b, "true", "false"); }
+
+String boolSuccess(bool b) { return boolToString(b, SUCCESS_STR, FAIL_STR); }
 
 String quotedText(String s) { return "\"" + s + "\""; }
 
