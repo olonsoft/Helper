@@ -23,6 +23,7 @@ String   addTrailingSlash(String str);
 bool     isdigit(char n);
 String   boolToString(bool b, String t, String f);
 String   boolToString(bool b);
+String   boolSuccess(bool b);
 String   intToString(int32_t i);
 String   quotedText(String s);
 String   quotedText(const char* s);
