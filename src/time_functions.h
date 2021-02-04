@@ -8,13 +8,13 @@
   (((1970 + Y) > 0) && !((1970 + Y) % 4) && \
    (((1970 + Y) % 100) || !((1970 + Y) % 400)))
 
-  uint32_t getUpTimeSeconds();
-  String getUpTimeString();
-  String hourToString(time_t time1);
-  String getLocalHourString();
-  String timeToString();
-  long ICACHE_RAM_ATTR timeDiff(const unsigned long prev,
-                                const unsigned long next);
-  long timePassedSince(unsigned long timestamp);
-  bool timeOutReached(unsigned long timer);
-  bool isLeapYear(int year);
+uint32_t getUpTimeSeconds();
+String getUpTimeString();
+String hourToString(time_t time1);
+String getLocalHourString();
+String timeToString();
+long ICACHE_RAM_ATTR timeDiff(const unsigned long prev,
+                              const unsigned long next);
+long timePassedSince(unsigned long timestamp);
+bool timeOutReached(unsigned long timer);
+bool isLeapYear(int year);
