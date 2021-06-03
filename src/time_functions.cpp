@@ -68,7 +68,7 @@ String timeToString() {
   return buf;
 }
 
-long ICACHE_RAM_ATTR timeDiff(const unsigned long prev,
+long IRAM_ATTR timeDiff(const unsigned long prev,
                               const unsigned long next) {
   long signed_diff = 0;
 

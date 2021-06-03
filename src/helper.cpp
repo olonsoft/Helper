@@ -132,7 +132,8 @@ String formatBytes(size_t bytes) {
 
 String intToString(int32_t i) {
 	char buf[16];
-	sprintf(buf, "%" PRId32, i);
+  //sprintf(buf, "%" PRId32, i);
+	sprintf(buf, "%d", i);
 	return String(buf);
 }
 
