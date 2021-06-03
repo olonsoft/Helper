@@ -1,19 +1,6 @@
 #include <arduino.h>
 #include <helper.h>
-#include <helper_debug>
 #include <time_functions.h>
-
-#include <FS.h>
-
-#ifdef ESP32
-#include <WiFi.h>
-#include <LITTLEFS.h>
-#define ESP_FS LITTLEFS
-#elif defined(ESP8266)
-#include <ESP8266WiFi.h>
-#include <LittleFS.h>
-#define ESP_FS LittleFS
-#endif
 
 String lastErrorStr = "";
 bool fileSystemBegun = false;
@@ -168,7 +155,7 @@ bool beginFS() {
 #else
     fileSystemBegun = ESP_FS.begin();
     if (!fileSystemBegun) {
-      DEBUG_PRINTF_P(PSTR("Formatting FS.\n"));
+      LOGDEBUGF_P(PSTR("Formatting FS.\n"));
       fileSystemBegun = ESP_FS.format();
     }
 #endif  
