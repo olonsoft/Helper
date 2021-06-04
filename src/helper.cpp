@@ -238,7 +238,7 @@ String getSystemInfoJson() {
     s += c + jsonPair(F("IP"),      WiFi.softAPIP().toString());
     s += c + jsonPair(F("MAC"),     WiFi.softAPmacAddress());
   }
-  s += c + jsonPair(F("UpTime"),    getUpTimeString());
+  s += c + jsonPair(F("UpTime"),    helper_time::getUpTimeString());
   s += c + jsonPair(F("Reset Reason"), getResetReasonString());
   s += c + jsonPair(F("Last Error"), lastErrorStr);
   s += F("}");
@@ -250,7 +250,7 @@ String getSystemStatusJson(int errWiFi, int errMqtt) {
   String s = "{";
 
   s +=     jsonPair(F("Time"),      timeToString());
-  s += c + jsonPair(F("UpTime"),    getUpTimeString());
+  s += c + jsonPair(F("UpTime"),    helper_time::getUpTimeString());
   s += c + jsonPair(F("Free heap"), formatBytes(ESP.getFreeHeap()));  // esp32
   s += c + jsonPair(F("SSID"),      WiFi.SSID());
   // s c + += jsonPair(F("psk"),    WiFi.psk());

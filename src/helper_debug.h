@@ -46,7 +46,7 @@
 #define TERMINAL_COLOR_VERBOSE  DBG_PORT.print("[" TERMINAL_COLOR_CYAN "V" TERMINAL_COLOR_RESET "] ")
 
 #ifdef TERMINAL_TIME_PRINT
-#define TIMESTAMP_PRINT      DBG_PORT.printf("[" TERMINAL_COLOR_TIME "%s" TERMINAL_COLOR_RESET "] ", timeToString().c_str())
+#define TIMESTAMP_PRINT      DBG_PORT.printf("[" TERMINAL_COLOR_TIME "%s" TERMINAL_COLOR_RESET "] ", helper_time::timeToString().c_str())
 #else
 #define TIMESTAMP_PRINT      DBG_PORT.printf("[" TERMINAL_COLOR_TIME "%10lu" TERMINAL_COLOR_RESET "] ", millis())
 #endif
@@ -59,7 +59,7 @@
 #define TERMINAL_COLOR_DEBUG   DBG_PORT.print("[D] ")
 #define TERMINAL_COLOR_VERBOSE DBG_PORT.print("[V] ")
 #ifdef TERMINAL_TIME_PRINT
-#define TIMESTAMP_PRINT      DBG_PORT.printf("[%s] ", timeToString().c_str())
+#define TIMESTAMP_PRINT      DBG_PORT.printf("[%s] ", helper_time::timeToString().c_str())
 #else
 #define TIMESTAMP_PRINT      DBG_PORT.printf("[%10lu] ", millis())
 #endif
