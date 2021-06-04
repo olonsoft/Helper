@@ -1,5 +1,7 @@
 #include <helper_wifi.h>
 
+namespace helper_wifi {
+
 bool wifiIsAP(WiFiMode_t wifimode)
 {
   #if defined(ESP32)
@@ -95,4 +97,6 @@ String getEncryptionTypeStr(uint8_t authmode) {
       break;
   }
   return "Unknown";
+}
+
 }

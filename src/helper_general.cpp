@@ -1,6 +1,8 @@
 #include <arduino.h>
 #include <helper.h>
-#include <time_functions.h>
+#include <helper_time.h>
+
+namespace helper_general {
 
 String lastErrorStr = "";
 bool fileSystemBegun = false;
@@ -409,3 +411,5 @@ vector<string> split(const string& s, const char* delimiter){
 }
 
 */
+
+}

@@ -1,18 +1,4 @@
-#pragma once
-
-#include <Arduino.h>
-#include <time.h>
-
-#define SECS_PER_MIN ((uint32_t)(60UL))
-#define SECS_PER_HOUR ((uint32_t)(3600UL))
-#define SECS_PER_DAY ((uint32_t)(SECS_PER_HOUR * 24UL))
-#define MINS_PER_HOUR ((uint32_t)(60UL))
-#define LEAP_YEAR(Y)                        \
-  (((1970 + Y) > 0) && !((1970 + Y) % 4) && \
-   (((1970 + Y) % 100) || !((1970 + Y) % 400)))
-
-// max 49710 days
-// UINT32_MAX = 0xFFFFFFFFUL = 4294967295
+#include <time_functions.h>
 
 namespace helper_time {
 
@@ -29,7 +15,7 @@ uint32_t getUpTimeSeconds() {
   return uptime_seconds;
 }
 
-String   getUpTimeString(){
+String getUpTimeString(){
   char buffer[15];  // "99999T23:59:59"
 
   uint32_t secs = getUpTimeSeconds();
@@ -53,7 +39,6 @@ String   getUpTimeString(){
              _minutes, _seconds);
   return buffer;
 }
-
 
 String hourToString(time_t time1) {
   // Convert time_t to tm as UTC time
@@ -171,4 +156,5 @@ bool TimeReachedUsec(uint32_t timer) {
   return (passed >= 0);
 }
 
-} // namespace helper_time
+
+}

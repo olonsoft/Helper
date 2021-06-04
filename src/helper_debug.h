@@ -1,6 +1,6 @@
 #pragma once
 
-#include <time_functions.h>
+#include <helper_time.h>
 
 #ifdef APP_DEBUG_PORT
   #define DBG_PORT      APP_DEBUG_PORT

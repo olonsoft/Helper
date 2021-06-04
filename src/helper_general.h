@@ -26,6 +26,8 @@
 #define BIT_TOGGLE(value, pos) (value ^= (1ULL << pos))
 #define BIT_IS_SET(value, pos) (!!(value) & (1ULL << pos))
 
+namespace helper_general {
+
 uint32_t getChipIdInt();
 String   getChipIdHex();
 String   getChipIdStr();
@@ -53,3 +55,5 @@ bool     beginFS();
 
 extern String lastErrorStr;
 extern bool fileSystemBegun;
+
+}
