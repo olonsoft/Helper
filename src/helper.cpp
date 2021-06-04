@@ -249,7 +249,7 @@ String getSystemStatusJson(int errWiFi, int errMqtt) {
   String c = ",";
   String s = "{";
 
-  s +=     jsonPair(F("Time"),      timeToString());
+  s +=     jsonPair(F("Time"),      helper_time::timeToString());
   s += c + jsonPair(F("UpTime"),    helper_time::getUpTimeString());
   s += c + jsonPair(F("Free heap"), formatBytes(ESP.getFreeHeap()));  // esp32
   s += c + jsonPair(F("SSID"),      WiFi.SSID());
