@@ -1,6 +1,6 @@
 #pragma once
 
-#include <arduino.h>
+#include <Arduino.h>
 #include <time.h>
 
 #define SECS_PER_MIN ((uint32_t)(60UL))
@@ -11,7 +11,12 @@
   (((1970 + Y) > 0) && !((1970 + Y) % 4) && \
    (((1970 + Y) % 100) || !((1970 + Y) % 400)))
 
-//max 49710 days
+// max 49710 days
+// UINT32_MAX = 0xFFFFFFFFUL = 4294967295
+
+namespace helper_time {
+
+
 uint32_t getUpTimeSeconds() {
   static unsigned long last_uptime      = 0;
   static unsigned char uptime_overflows = 0;
@@ -22,7 +27,7 @@ uint32_t getUpTimeSeconds() {
       uptime_overflows * (UINT32_MAX / 1000) + (last_uptime / 1000);
 
   return uptime_seconds;
-};
+}
 
 String   getUpTimeString(){
   char buffer[15];  // "99999T23:59:59"
@@ -47,7 +52,7 @@ String   getUpTimeString(){
   snprintf_P(buffer, sizeof(buffer), PSTR("%dT%02d:%02d:%02d"), _days, _hours,
              _minutes, _seconds);
   return buffer;
-};
+}
 
 
 String hourToString(time_t time1) {
@@ -58,7 +63,7 @@ String hourToString(time_t time1) {
   snprintf_P(timeString, sizeof(timeString), PSTR("%02d:%02d:%02d"), t->tm_hour,
              t->tm_min, t->tm_sec);
   return timeString;
-};
+}
 
 
 String getLocalHourString() {
@@ -66,7 +71,7 @@ String getLocalHourString() {
   // get number of seconds since 00:00 hours, 01/01/1970 UTC (unix timestamp)
   time(&_time); 
   return hourToString(_time);
-};
+}
 
 
 String timeToString() {
@@ -75,7 +80,7 @@ String timeToString() {
   char buf[20];  // "2020-01-09T13:20:30" + 1;
   strftime(buf, sizeof(buf), "%FT%T", localtime(&t));
   return buf;
-};
+}
 
 
 long IRAM_ATTR timeDiff(const unsigned long prev,
@@ -95,7 +100,7 @@ long IRAM_ATTR timeDiff(const unsigned long prev,
       signed_diff = static_cast<long>(diff);
     } else {
       // prev has overflow, return a negative difference value
-      signed_diff = static_cast<long>((ULONG_MAX - next) + prev + 1u);
+      signed_diff = static_cast<long>((UINT32_MAX - next) + prev + 1u);
       signed_diff = -1 * signed_diff;
     }
   } else {
@@ -108,7 +113,7 @@ long IRAM_ATTR timeDiff(const unsigned long prev,
       signed_diff = -1 * signed_diff;
     } else {
       // next has overflow, return a positive difference value
-      signed_diff = static_cast<long>((ULONG_MAX - prev) + next + 1u);
+      signed_diff = static_cast<long>((UINT32_MAX - prev) + next + 1u);
     }
   }
   return signed_diff;
@@ -165,3 +170,5 @@ bool TimeReachedUsec(uint32_t timer) {
   const long passed = TimePassedSinceUsec(timer);
   return (passed >= 0);
 }
+
+} // namespace helper_time
