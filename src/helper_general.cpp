@@ -4,8 +4,8 @@
 
 namespace helper_general {
 
-String lastErrorStr = "";
-bool fileSystemBegun = false;
+String _last_error_text = "";
+bool _file_system_begun = false;
 
 String getChipIdHex() {
   String mac = WiFi.macAddress();
@@ -94,7 +94,7 @@ String getResetReasonString() {
 #endif
 }
 
-String getDeviceName(String name) {
+String addMacAddress(String name) {
   String output = name;
   output.replace(DEVICE_ID_STR, getChipIdHex());
   return output;
@@ -102,9 +102,9 @@ String getDeviceName(String name) {
 
 String getDefaultDeviceName() {
 #ifdef ESP8266
-  return getDeviceName("ESP8266-"+ String(DEVICE_ID_STR));
+  return addMacAddress("ESP8266-"+ String(DEVICE_ID_STR));
 #elif defined(ESP32)
-  return getDeviceName("ESP32-" + String(DEVICE_ID_STR));
+  return addMacAddress("ESP32-" + String(DEVICE_ID_STR));
 #endif
 }
 
@@ -150,19 +150,26 @@ ESP32 MAX RAM ALLOC: 122.09KB
 ESP32 FREE PSRAM: 3545.93KB
 */
 
-bool beginFS() {
-  if (!fileSystemBegun) {
+bool beginFileSystem() {
+  if (true) {
 #ifdef ESP32    
-    fileSystemBegun = ESP_FS.begin(FORMAT_LITTLEFS_IF_FAILED); // format on fail.
+    _file_system_begun = ESP_FS.begin(FORMAT_LITTLEFS_IF_FAILED); // format on fail.
 #else
-    fileSystemBegun = ESP_FS.begin();
-    if (!fileSystemBegun) {
-      LOGDEBUGF_P(PSTR("Formatting FS.\n"));
-      fileSystemBegun = ESP_FS.format();
+    _file_system_begun = ESP_FS.begin();
+    if (!_file_system_begun) {
+      LOGDEBUGF_P(PSTR("[FS] Formatting FS.\n"));
+      _file_system_begun = ESP_FS.format();
     }
 #endif  
   }
-  return (fileSystemBegun);
+
+  if (_file_system_begun) {
+    LOGDEBUGF_P(PSTR("[FS] File system check OK.\n"));
+  } else {
+    LOGDEBUGF_P(PSTR("[FS] File system check ERROR.\n"));
+  }
+
+  return (_file_system_begun);
 }
 
 String getSystemInfoJson() {  
@@ -211,8 +218,8 @@ String getSystemInfoJson() {
   s += c + jsonPair(F("Free FW space"),  formatBytes(ESP.getFreeSketchSpace()));   // esp32
  
   // ================= LittleFS ================
-  if (!beginFS() ) {
-    lastErrorStr = F("LittleFS Mount Failed");
+  if (!beginFileSystem() ) {
+    _last_error_text = F("LittleFS Mount Failed");
   }
 
 #ifdef ESP8266
@@ -242,7 +249,7 @@ String getSystemInfoJson() {
   }
   s += c + jsonPair(F("UpTime"),    helper_time::getUpTimeString());
   s += c + jsonPair(F("Reset Reason"), getResetReasonString());
-  s += c + jsonPair(F("Last Error"), lastErrorStr);
+  s += c + jsonPair(F("Last Error"), _last_error_text);
   s += F("}");
   return s;
 }

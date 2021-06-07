@@ -31,7 +31,7 @@ namespace helper_general {
 uint32_t getChipIdInt();
 String   getChipIdHex();
 String   getChipIdStr();
-String   getDeviceName(String name);
+String   addMacAddress(String name);
 String   getDefaultDeviceName();
 String   getSystemInfoJson();
 String   getSystemStatusJson(int errWiFi, int errMqtt);
@@ -51,9 +51,9 @@ String   jsonPair(const char* s1, const char* s2);
 bool     isTrue(String s);
 String   TwoDigitNumber(int n);
 String   formatBytes(size_t bytes);
-bool     beginFS();
+bool     beginFileSystem();
 
-extern String lastErrorStr;
-extern bool fileSystemBegun;
+extern String _last_error_text;
+extern bool _file_system_begun;
 
 }
