@@ -83,21 +83,9 @@ uint8_t getMonthDays(int year, uint8_t month) {
 
 // ===============================
 
-inline int32_t timeDifference(uint32_t prev, uint32_t next) {
-  return ((int32_t)(next - prev));
-}
-
-inline int32_t timePassedSince(uint32_t timestamp) {
-  return timeDifference(timestamp, millis());
-}
-
-inline bool timeReached(uint32_t timer) {
-  return (timePassedSince(timer) >= 0);
-}
-
 void setNextTimeInterval(uint32_t& timer, const uint32_t step) {
   timer += step;
-  const long passed = TimePassedSince(timer);
+  const long passed = timePassedSince(timer);
   if (passed < 0) {
     return;
   }
