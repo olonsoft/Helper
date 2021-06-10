@@ -17,24 +17,18 @@
 namespace helper_time {
 
 uint32_t getUpTimeSeconds();
-String getUpTimeString();
-String hourToString(time_t time1);
-String getLocalHourString();
-String timeToString();
-
-long IRAM_ATTR timeDiff(const unsigned long prev,
-                              const unsigned long next);
-long timePassedSince2(unsigned long timestamp);
-bool timeOutReached(unsigned long timer) ;
-bool isLeapYear(int year);
+String   getUpTimeString();
+String   hourToString(time_t time1);
+String   getLocalHourString();
+String   timeToString();
+bool     isLeapYear(int year);
+uint8_t  getMonthDays(int year, uint8_t month);
 
 // from tasmota :
 
-inline int32_t TimeDifference(uint32_t prev, uint32_t next);
-int32_t TimePassedSince(uint32_t timestamp);
-bool TimeReached(uint32_t timer);
-void SetNextTimeInterval(uint32_t& timer, const uint32_t step);
-int32_t TimePassedSinceUsec(uint32_t timestamp);
-bool TimeReachedUsec(uint32_t timer);
+inline int32_t timeDifference(uint32_t prev, uint32_t next);
+inline int32_t timePassedSince(uint32_t timestamp);
+inline bool timeReached(uint32_t timer);
+void setNextTimeInterval(uint32_t& timer, const uint32_t step);
 
 } // namespace helper_time

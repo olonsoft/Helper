@@ -67,72 +67,35 @@ String timeToString() {
   return buf;
 }
 
-
-long IRAM_ATTR timeDiff(const unsigned long prev,
-                              const unsigned long next) {
-  long signed_diff = 0;
-
-  // To cast a value to a signed long, the difference may not exceed half the
-  // ULONG_MAX
-  const unsigned long half_max_unsigned_long = 2147483647u;  // = 2^31 -1
-
-  if (next >= prev) {
-    const unsigned long diff = next - prev;
-
-    if (diff <= half_max_unsigned_long) {
-      // Normal situation, just return the difference.
-      // Difference is a positive value.
-      signed_diff = static_cast<long>(diff);
-    } else {
-      // prev has overflow, return a negative difference value
-      signed_diff = static_cast<long>((UINT32_MAX - next) + prev + 1u);
-      signed_diff = -1 * signed_diff;
-    }
-  } else {
-    // next < prev
-    const unsigned long diff = prev - next;
-
-    if (diff <= half_max_unsigned_long) {
-      // Normal situation, return a negative difference value
-      signed_diff = static_cast<long>(diff);
-      signed_diff = -1 * signed_diff;
-    } else {
-      // next has overflow, return a positive difference value
-      signed_diff = static_cast<long>((UINT32_MAX - prev) + next + 1u);
-    }
-  }
-  return signed_diff;
-}
-
-long timePassedSince2(unsigned long timestamp) {
-  return timeDiff(timestamp, millis());
-}
-
-bool timeOutReached(unsigned long timer) {
-  const long passed = timePassedSince2(timer);
-
-  return passed >= 0;
-}
-
 bool isLeapYear(int year) { return LEAP_YEAR(year); }
 
 
-// from tasmota :
+uint8_t getMonthDays(int year, uint8_t month) {
+  const uint8_t monthDays[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+  if (month == 1 && isLeapYear(year)) {
+    return 29;
+  }
+  if (month > 11) {
+    return 0;
+  }
+  return monthDays[month];
+}
 
-inline int32_t TimeDifference(uint32_t prev, uint32_t next) {
+// ===============================
+
+inline int32_t timeDifference(uint32_t prev, uint32_t next) {
   return ((int32_t)(next - prev));
 }
 
-int32_t TimePassedSince(uint32_t timestamp) {
-  return TimeDifference(timestamp, millis());
+inline int32_t timePassedSince(uint32_t timestamp) {
+  return timeDifference(timestamp, millis());
 }
 
-bool TimeReached(uint32_t timer) {
-  const long passed = TimePassedSince(timer);
-  return (passed >= 0);
+inline bool timeReached(uint32_t timer) {
+  return (timePassedSince(timer) >= 0);
 }
 
-void SetNextTimeInterval(uint32_t& timer, const uint32_t step) {
+void setNextTimeInterval(uint32_t& timer, const uint32_t step) {
   timer += step;
   const long passed = TimePassedSince(timer);
   if (passed < 0) {
@@ -145,15 +108,6 @@ void SetNextTimeInterval(uint32_t& timer, const uint32_t step) {
   }
 
   timer = millis() + (step - passed);
-}
-
-int32_t TimePassedSinceUsec(uint32_t timestamp) {
-  return TimeDifference(timestamp, micros());
-}
-
-bool TimeReachedUsec(uint32_t timer) {
-  const long passed = TimePassedSinceUsec(timer);
-  return (passed >= 0);
 }
 
 
