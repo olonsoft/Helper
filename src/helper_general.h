@@ -4,14 +4,17 @@
 
 #include <FS.h>
 
-#ifdef ESP32
-#include <WiFi.h>
-#include <LITTLEFS.h>
-#define ESP_FS LITTLEFS
-#elif defined(ESP8266)
-#include <ESP8266WiFi.h>
 #include <LittleFS.h>
 #define ESP_FS LittleFS
+
+#ifdef ESP32
+#include <WiFi.h>
+//#include <LITTLEFS.h>
+//#define ESP_FS LITTLEFS
+#elif defined(ESP8266)
+#include <ESP8266WiFi.h>
+//#include <LittleFS.h>
+//#define ESP_FS LittleFS
 #endif
 
 #define FORMAT_LITTLEFS_IF_FAILED true
